@@ -1,5 +1,5 @@
 import random
-
+running = True
 def load_word():
     '''
     A function that reads a text file of words and randomly selects one to use as the secret word
@@ -52,8 +52,12 @@ def is_guess_in_word(guess, secret_word):
         bool: True if the guess is in the secret_word, False otherwise
     '''
     #TODO: check if the letter guess is in the secret word
+    secret_word = list(secret_word)
+    i = 0
+    for i in len(secret_word):
+        if 
 
-    pass
+    
 
 
 
@@ -68,13 +72,34 @@ def spaceman(secret_word):
 
     #TODO: show the player information about the game according to the project spec
 
+    print("This is a game of spaceman. You will guess the word letter by letter.")
+
     #TODO: Ask the player to guess one letter per round and check that it is only one letter
 
-    #TODO: Check if the guessed letter is in the secret or not and give the player feedback
+    print("Please guess a letter.")
+    current_guess = str(input())
 
+    #TODO: Check if the guessed letter is in the secret or not and give the player feedback
+    is_guess_in_word(current_guess, secret_word)
     #TODO: show the guessed word so far
 
+    print(get_guessed_word)
+
     #TODO: check if the game has been won or lost
+
+    if is_word_guessed:
+        print("you won the game! Would you like to play again? (y/n")
+        user_answer = str(input())
+        if user_answer == "y":
+            running = True
+        elif user_answer == "n":
+            running = False
+        else:
+            print("Please enter y or n")
+            user_answer = "y"
+
+
+
 
 
 
@@ -82,5 +107,8 @@ def spaceman(secret_word):
 
 
 #These function calls that will start the game
-secret_word = load_word()
-spaceman(secret_word)
+
+while running:
+
+    secret_word = load_word()
+    spaceman(secret_word)
