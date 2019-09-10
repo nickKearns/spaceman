@@ -1,6 +1,6 @@
 import random
 running = True
-guessed_letters = list
+guessed_letters = list()
 number_of_guesses = 0
 def load_word():
     '''
@@ -29,6 +29,9 @@ def is_word_guessed(secret_word, letters_guessed):
     # TODO: Loop through the letters in the secret_word and check if a letter is not in lettersGuessed
     if secret_word.lower() == letters_guessed.lower():
         return True
+        print("word is guessed")
+        print(secret_word)
+        print(letters_guessed)
     else:
         return False
 
@@ -85,12 +88,13 @@ def spaceman(secret_word):
     while invalid_input:
         print("Please guess a letter.")
         user_answer = input()
-        if user_answer.alpha() == True and user_answer.len() == 1:
+        if user_answer.isalpha() == True and len(user_answer) == 1 and user_answer not in guessed_letters:
             invalid_input = False
         else:
             invalid_input = True
+            print("invalid input try again")
     
-        
+    
     #TODO: Check if the guessed letter is in the secret or not and give the player feedback
 
 
@@ -100,16 +104,11 @@ def spaceman(secret_word):
         # call get guessed word
 
 
-
-
-
-
-
     #TODO: check if the game has been won or lost
 
         if is_word_guessed:
-            print("you won the game! Would you like to play again? (y/n")
-            user_answer = str(input())
+            print("you won the game! Would you like to play again? (y/n)")
+            user_answer = input()
             if user_answer == "y":
                 running = True
             elif user_answer == "n":
