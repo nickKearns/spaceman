@@ -1,3 +1,4 @@
+#Thank you to Ben Laferty for help
 import random
 running = True
 number_of_guesses = 7
@@ -13,12 +14,16 @@ def load_word():
     return secret_word
 
 def is_word_guessed(secret_word, letters_guessed):
-   
+    counter = 0
     # TODO: Loop through the letters in the secret_word and check if a letter is not in lettersGuessed
     for i in secret_word:
-        if secret_word[i] not in letters_guessed:
-            return False
-    return True
+        if i in letters_guessed:
+            counter += 1
+    if counter == len(secret_word):
+        return True
+    else:
+        return False
+        
     
         
 
@@ -52,48 +57,47 @@ def spaceman(secret_word):
 
     #TODO: show the player information about the game according to the project spec
 
-    
+    cont = True
+    while cont:
+        #TODO: Ask the player to guess one letter per round and check that it is only one letter
+        invalid_input = True
+        while invalid_input:
+            print("Please guess a letter.")
+            user_input = input()
+            global guessed_letters
+            if user_input.isalpha() == True and len(user_input) == 1:
+                invalid_input = False
+                guessed_letters.append(user_input)
+            else:
+                invalid_input = True
+                print("invalid input try again")
+        
+        
+        #TODO: Check if the guessed letter is in the secret or not and give the player feedback
 
-    #TODO: Ask the player to guess one letter per round and check that it is only one letter
-    invalid_input = True
-    while invalid_input:
-        print("Please guess a letter.")
-        user_input = input()
-        global guessed_letters
-        if user_input.isalpha() == True and len(user_input) == 1:
-            invalid_input = False
-            guessed_letters.append(user_input)
+
+        #TODO: show the guessed word so far
+
+        if is_guess_in_word(user_input, secret_word):
+            # call get guessed word
+            temp_string1 = ''.join(get_guessed_word(secret_word, guessed_letters))
+            print("That is a correct guess!")
+            print(temp_string1)
         else:
-            invalid_input = True
-            print("invalid input try again")
-    
-    
-    #TODO: Check if the guessed letter is in the secret or not and give the player feedback
+            print("That letter is not in the word. Sorry")
+            temp_string2 = ''.join(get_guessed_word(secret_word, guessed_letters))
+            print(temp_string2)
+            global number_of_guesses
+            number_of_guesses -= 1
 
+            if number_of_guesses == 0:
+                print("You have reached the maximum number of guesses, you lose.")
+                cont = False
+            print("You have: " + str(number_of_guesses) + " wrong guesses left.")
+        if is_word_guessed(secret_word, guessed_letters) == True:
+            print("You won the game!")
+            cont = False
 
-    #TODO: show the guessed word so far
-
-    if is_guess_in_word(user_input, secret_word):
-        # call get guessed word
-        temp_string1 = ''.join(get_guessed_word(secret_word, guessed_letters))
-        print("That is a correct guess!")
-        print(temp_string1)
-    else:
-        print("That letter is not in the word. Sorry")
-        temp_string2 = ''.join(get_guessed_word(secret_word, guessed_letters))
-        print(temp_string2)
-        # if is_word_guessed == True:
-        #     print("you won the game! Would you like to play again? (y/n)")
-        #     user_answer = input()
-        #     if user_answer == "y":
-        #         running = True
-        #     elif user_answer == "n":
-        #         running = False
-        #     else:
-        #         print("Please enter y or n")
-        #         user_answer = "y"
-        # else:
-        #     running=False
 
 
 
@@ -105,12 +109,9 @@ def spaceman(secret_word):
 
 secret_word = load_word()
 print("This is a game of spaceman. You will guess the word letter by letter.")
-while running == True:
+print(secret_word)
+
 
     
-    spaceman(secret_word)
-    number_of_guesses -= 1
-    print("You have: " + str(number_of_guesses) + " guesses left.")
-    if number_of_guesses == 0:
-        print("You have reached the maximum number of guesses, you lose.")
-        running = False
+spaceman(secret_word)
+
