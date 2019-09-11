@@ -1,7 +1,8 @@
 import random
 running = True
-guessed_letters = list()
+built_string = ""
 number_of_guesses = 0
+guessed_letters = ""
 def load_word():
     '''
     A function that reads a text file of words and randomly selects one to use as the secret word
@@ -27,11 +28,12 @@ def is_word_guessed(secret_word, letters_guessed):
         bool: True only if all the letters of secret_word are in letters_guessed, False otherwise
     '''
     # TODO: Loop through the letters in the secret_word and check if a letter is not in lettersGuessed
-    if secret_word.lower() == letters_guessed.lower():
-        return True
+    if secret_word.lower() == built_string.lower():
         print("word is guessed")
         print(secret_word)
         print(letters_guessed)
+        return True
+        
     else:
         return False
 
@@ -44,7 +46,14 @@ def get_guessed_word(secret_word, letters_guessed):
     Returns: 
         string: letters and underscores.  For letters in the word that the user has guessed correctly, the string should contain the letter at the correct position.  For letters in the word that the user has not yet guessed, shown an _ (underscore) instead.
     '''
-
+    i = 0
+    for i in range(len(secret_word)):
+        for j in range(len(letters_guessed)):
+            if secret_word[i] == letters_guessed[j]:
+                built_string[i] += letters_guessed[j]
+            else:
+                built_string[i] += "_"
+    return built_string
 
 
     #TODO: Loop through the letters in secret word and build a string that shows the letters that have been guessed correctly so far that are saved in letters_guessed and underscores for the letters that have not been guessed yet
@@ -88,6 +97,7 @@ def spaceman(secret_word):
     while invalid_input:
         print("Please guess a letter.")
         user_answer = input()
+        guessed_letters += user_answer
         if user_answer.isalpha() == True and len(user_answer) == 1 and user_answer not in guessed_letters:
             invalid_input = False
         else:
@@ -100,8 +110,12 @@ def spaceman(secret_word):
 
     #TODO: show the guessed word so far
 
-    if is_guess_in_word:
+    if is_guess_in_word(user_answer, secret_word):
         # call get guessed word
+        print(get_guessed_word(secret_word, guessed_letters))
+    else:
+        print("That letter is not in the word. Sorry")
+        print(get_guessed_word(secret_word, guessed_letters))
 
 
     #TODO: check if the game has been won or lost
@@ -132,3 +146,6 @@ while running:
     secret_word = load_word()
     spaceman(secret_word)
     print(secret_word)
+    number_of_guesses += 1
+    if number_of_guesses > 7:
+        running = False
