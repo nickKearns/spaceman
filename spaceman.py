@@ -23,7 +23,7 @@ def is_word_guessed(secret_word, letters_guessed):
         return True
     else:
         return False
-        
+
     
         
 
@@ -109,7 +109,7 @@ def spaceman(secret_word):
 
 secret_word = load_word()
 print("This is a game of spaceman. You will guess the word letter by letter.")
-print(secret_word)
+#print(secret_word)
 
 
     
