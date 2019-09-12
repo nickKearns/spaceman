@@ -1,4 +1,5 @@
 #Thank you to Ben Laferty for help
+import os
 import random
 def load_word():
 
@@ -108,13 +109,13 @@ def spaceman(secret_word):
             print_progress(secret_word, guessed_letters)
             number_of_guesses -= 1
 
-
+            print("You have: " + str(number_of_guesses) + " wrong guesses left.")
 
             if number_of_guesses == 0:
                 print("You have reached the maximum number of guesses, you lose.")
-                print("The word was: " + secret_word + " .")
+                print("The word was: " + ''.join(secret_word) + " .")
                 cont = False
-            print("You have: " + str(number_of_guesses) + " wrong guesses left.")
+            
         if is_word_guessed(secret_word, guessed_letters) == True:
             print("You won the game!")
             cont = False
@@ -127,12 +128,14 @@ def spaceman(secret_word):
 
 
 #These function calls that will start the game
-
-secret_word = load_word()
-print("This is a game of spaceman. You will guess the word letter by letter.")
-#print(secret_word)
+play_again = 'yes'
+while play_again == 'yes':
 
 
-    
-spaceman(secret_word)
+    secret_word = load_word()
+    print("This is a game of spaceman. You will guess the word letter by letter.")
+    #print(secret_word)
+
+    spaceman(secret_word)
+    play_again = input("Would you like to play again? (yes/no)")
 
