@@ -1,5 +1,4 @@
 #Thank you to Ben Laferty for help
-import os
 import random
 def load_word():
 
