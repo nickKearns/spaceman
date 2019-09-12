@@ -1,8 +1,5 @@
 #Thank you to Ben Laferty for help
 import random
-running = True
-number_of_guesses = 7
-guessed_letters = []
 def load_word():
 
     f = open('words.txt', 'r')
@@ -24,7 +21,12 @@ def is_word_guessed(secret_word, letters_guessed):
     else:
         return False
 
-    
+def letter_already_guessed(user_guess, letters_guessed):
+    if user_guess in letters_guessed:
+        return True
+    else:
+        return False
+
         
 
 def get_guessed_word(secret_word, letters_guessed):
@@ -49,12 +51,14 @@ def is_guess_in_word(guess, secret_word):
 
     
 
-
+def print_progress(secret_word, guessed_letters):
+    print(''.join(get_guessed_word(secret_word, guessed_letters)))
 
 
 def spaceman(secret_word):
    
-
+    number_of_guesses = len(secret_word)
+    guessed_letters = []
     #TODO: show the player information about the game according to the project spec
 
     cont = True
@@ -62,13 +66,22 @@ def spaceman(secret_word):
         #TODO: Ask the player to guess one letter per round and check that it is only one letter
         invalid_input = True
         while invalid_input:
-            print("Please guess a letter.")
-            user_input = input()
-            global guessed_letters
-            if user_input.isalpha() == True and len(user_input) == 1:
+            
+            user_input = input("Please guess a letter.\n")
+            if user_input.isalpha() == True and len(user_input) == 1 and not letter_already_guessed(user_input, guessed_letters):
+
+                #checks that the inputed string is a letter and only 1 letter
+
+                
+
                 invalid_input = False
+                
                 guessed_letters.append(user_input)
+            elif letter_already_guessed(user_input, guessed_letters):
+                print("That letter has already been guessed!")
+                invalid_input = True
             else:
+                
                 invalid_input = True
                 print("invalid input try again")
         
@@ -79,19 +92,27 @@ def spaceman(secret_word):
         #TODO: show the guessed word so far
 
         if is_guess_in_word(user_input, secret_word):
+
             # call get guessed word
-            temp_string1 = ''.join(get_guessed_word(secret_word, guessed_letters))
+
+            
             print("That is a correct guess!")
-            print(temp_string1)
+            print_progress(secret_word, guessed_letters)
+
+
         else:
+            
+            #increase number of wrong guesses and print the built string so far
+
             print("That letter is not in the word. Sorry")
-            temp_string2 = ''.join(get_guessed_word(secret_word, guessed_letters))
-            print(temp_string2)
-            global number_of_guesses
+            print_progress(secret_word, guessed_letters)
             number_of_guesses -= 1
+
+
 
             if number_of_guesses == 0:
                 print("You have reached the maximum number of guesses, you lose.")
+                print("The word was: " + secret_word + " .")
                 cont = False
             print("You have: " + str(number_of_guesses) + " wrong guesses left.")
         if is_word_guessed(secret_word, guessed_letters) == True:
