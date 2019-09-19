@@ -1,5 +1,6 @@
 #Thank you to Ben Laferty for help
 import random
+import unittest
 def load_word():
 
     f = open('words.txt', 'r')
@@ -122,6 +123,17 @@ def spaceman(secret_word):
 
 
 
+class Test_Spaceman(unittest.TestCase):
+    def test_is_word_guessed(self):
+        self.assertEqual(is_word_guessed("tuesday", "tuesday"), True)
+
+    def test_is_letter_guessed(self):
+        self.assertEqual(get_guessed_word('tuesday', 'tues'), ['t', 'u', 'e', 's', '_', '_', '_'])
+
+    def test_is_no_letters_guessed(self):
+        self.assertEqual(get_guessed_word('tuesday', ''), ['_', '_', '_', '_', '_', '_', '_'])
+
+
 
 
 
@@ -138,3 +150,4 @@ while play_again == 'yes':
     spaceman(secret_word)
     play_again = input("Would you like to play again? (yes/no)")
 
+unittest.main()
