@@ -132,6 +132,8 @@ class Test_Spaceman(unittest.TestCase):
 
     def test_is_no_letters_guessed(self):
         self.assertEqual(get_guessed_word('tuesday', ''), ['_', '_', '_', '_', '_', '_', '_'])
+    def test_is_letter_in_word(self):
+        self.assertEqual(is_guess_in_word('t', 'tuesday'), True)
 
 
 
